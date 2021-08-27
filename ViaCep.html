@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>Busca de CEP!</title>
+    </head>    
+    <style> body{font-family: Arial, Helvetica, sans-serif;} </style>
+  
+    <body>
+
+        <h1>API busca CEP!</h1>
+        <input id="cep" type="search" placeholder="Digite seu CEP" onblur="validarCep(this.value)"></input><br /><br />
+        <label id="rua" readonly>Rua</label><br /><br />
+        <label id="bairro" readonly>Bairro</label><br /><br />
+        <label id="cidade" readonly>Cidade</label><br /><br />
+        <label id="estado" readonly>Estado</label><br /><br />
+
+    </body>
+
+
+    <script>
+
+        function validarCep(cep){
+            var cepF = cep.replace(/\D/g, '');
+            if(cepF != ''){
+                buscarCEP(cepF)
+            }
+            else{
+                alert("CEP inválido.");
+            }
+        }
+
+        function buscarCEP(cep){
+            var script = document.createElement('script')
+            script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=resultado_cep';
+            document.body.appendChild(script);
+        }
+
+        function resultado_cep(resultado) {
+            
+            document.getElementById('rua').textContent=(resultado.logradouro);
+            document.getElementById('bairro').textContent=(resultado.bairro);
+            document.getElementById('cidade').textContent=(resultado.localidade);
+            document.getElementById('estado').textContent=(resultado.uf);
+    }
+    </script>
+    
+</html>
